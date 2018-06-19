@@ -82,7 +82,7 @@ export class Query<T> implements Queryable<T> {
   }
 
   public count(expression?: LambdaExpression<T>): number {
-    return this.where(expression).toList().length;
+    return this.toList(expression).length;
   }
 
   public limit(limit: number, offset: number = 0): Query<T> {
@@ -90,11 +90,11 @@ export class Query<T> implements Queryable<T> {
   }
 
   public firstOrDefault(expression?: LambdaExpression<T>, _default?: T): T {
-    const list = this.where(expression).toList();
+    const list = this.toList(expression);
     return list && list.length ? list[0] : _default;
   }
 
-  public toList(): T[] {
-    return this._list;
+  public toList(expression?: LambdaExpression<T>): T[] {
+    return this.where(expression)._list;
   }
 }
