@@ -95,6 +95,9 @@ export class Query<T> implements Queryable<T> {
   }
 
   public toList(expression?: LambdaExpression<T>): T[] {
-    return this.where(expression)._list;
+    if (expression) {
+      return this.where(expression)._list;
+    }
+    return this._list;
   }
 }
